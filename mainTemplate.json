@@ -115,25 +115,6 @@
         "description": "Specify the IP address to assign to the second BIG-IP's management interface."
       }
     },
-    "intSubnetName": {
-      "type": "string",
-      "defaultValue": "internal",
-      "metadata": {
-        "description": "Specify the virtual subnet name wher the BIG-IP will reside."
-      }
-    },
-    "intIPAddress1": {
-      "type": "string",
-      "metadata": {
-        "description": "Specify the IP address to assign to the first BIG-IP's internal interface."
-      }
-    },
-    "intIPAddress2": {
-      "type": "string",
-      "metadata": {
-        "description": "Specify the IP address to assign to the second BIG-IP's internal interface."
-      }
-    },
     "ilbSubnetName": {
       "type": "string",
       "defaultValue": "application",
@@ -152,7 +133,7 @@
     "location": "[resourceGroup().location]",
     "vnetNewOrExisting": "existing",
     "bigIpVersion": "latest",
-    "baseUrl": "https://raw.githubusercontent.com/gregcoward/2-int-ilb/master",
+    "baseUrl": "https://raw.githubusercontent.com/gregcoward/singleNIC-existingVNET/master",
     "newStorageAccountName": "[concat(uniquestring(concat(resourceGroup().id, 'st')), 'st')]",
     "diagStorageAccountName": "[concat(uniquestring(concat(resourceGroup().id, 'diag')), 'diag')]",
     "f5NamePrefix": "[parameters('bigipNamePrefix')]",
@@ -165,7 +146,6 @@
     "bigipTemplateLink": "[concat(variables('baseUrl'), '/bigip-',parameters('numberOfInstances'),'byolvip.json')]",
     "vnetLink": "[concat(variables('baseUrl'),'/',variables('vnetNewOrExisting'),'vnet.json')]",
     "mgmtsubnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('mgmtSubnetName'))]",
-    "intsubnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('intSubnetName'))]",
     "ilbsubnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('ilbSubnetName'))]",
     "nicNamePrefix": "[concat(parameters('bigipNamePrefix'),'-nic')]",
     "loadBalancerName": "[concat(parameters('bigipNamePrefix'),'-lb')]",
@@ -375,9 +355,6 @@
           "mgmtSubnetName": {
             "value": "[parameters('mgmtSubnetName')]"
           },
-          "intSubnetName": {
-            "value": "[parameters('intSubnetName')]"
-          },
           "vnetExistingRGName": {
             "value": "[parameters('vnetExistingRGName')]"
           }
@@ -414,8 +391,6 @@
           "instanceType": { "value": "[parameters('instanceType')]" },
           "mgmtIPAddress1": { "value": "[parameters('mgmtIPAddress1')]" },
           "mgmtIPAddress2": { "value": "[parameters('mgmtIPAddress2')]" },
-          "intIPAddress1": { "value": "[parameters('intIPAddress1')]" },
-          "intIPAddress2": { "value": "[parameters('intIPAddress2')]" },
           "ilbIPAddress": { "value": "[parameters('ilbIPAddress')]" },
           "nicNamePrefix": { "value": "[variables('nicNamePrefix')]" },
           "apiVersionCompute": { "value": "[variables('apiVersionCompute')]" },
@@ -434,7 +409,6 @@
           "newStorageAccountName": { "value": "[variables('newStorageAccountName')]" },
           "diagStorageAccountName": { "value": "[variables('diagStorageAccountName')]" },
           "mgmtSubnetRef": { "value": "[concat(reference('virtualNetworkTemplate').outputs.vnetID.value,'/subnets/',parameters('mgmtSubnetName'))]" },
-          "intSubnetRef": { "value": "[concat(reference('virtualNetworkTemplate').outputs.vnetID.value,'/subnets/',parameters('intSubnetName'))]" },
           "ilbSubnetRef": { "value": "[concat(reference('virtualNetworkTemplate').outputs.vnetID.value,'/subnets/',parameters('ilbSubnetName'))]" }
         }
       }

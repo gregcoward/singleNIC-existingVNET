@@ -32,12 +32,6 @@
         "description": "Name of mgmt Subnet"
       }
     },
-    "intSubnetName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of internal facing Subnet"
-      }
-    },
     "vnetExistingRGName": {
       "type": "string",
       "metadata": {
