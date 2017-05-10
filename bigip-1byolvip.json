@@ -195,6 +195,7 @@
         "displayName": "NetworkInterface"
       },
       "dependsOn": [
+          "[concat('Microsoft.Network/loadBalancers/', parameters('loadBalancerName'),'-data')]"
       ],
       "properties": {
         "ipConfigurations": [
